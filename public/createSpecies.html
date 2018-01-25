@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Mushpoops</title>
+</head>
+<body ng-app="Mushlist">
+    <form id="speciesform">
+        Name <input type="text" v-model="form.name" /><br />
+        Genus <input type="text" v-model="form.genus" /><br />
+        Species <input type="text" v-model="form.species" /><br />
+        <button type="button" v-on:click="addSpecies()">Add</button>
+    </form>
+    <script src="js/http.js"></script>
+    <script src="js/sample.js"></script>
+    <script src="js/components.js"></script>
+
+</body>
+
+</html>
