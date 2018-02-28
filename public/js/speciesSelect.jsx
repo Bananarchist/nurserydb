@@ -8,14 +8,25 @@ function fetchAllSpecies() {
             "Accept": "application/json",
             "Content-Type": "application/json"
         },
-    }).then(data=>data.json());
+    })
+    .then(data => data.json())
+    .then(data => {
+        return data.map(
+            (r,i) => {
+                r.fullname = `${r.genus} ${r.species}`;
+                return r;
+            }
+        )
+    });
 }
 
-class SpeciesSelectBox extends React.Component {
+export default class SpeciesSelect extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            species: []
+            options: [],
+            suggestions: "No suggestions",
+            species: "",
         };
         if(this.props.species && this.props.species.length) {
             this.setState({species:this.props.species});
@@ -23,7 +34,7 @@ class SpeciesSelectBox extends React.Component {
 
     }
     componentDidMount() {
-        if(!this.state.species.length) {
+        if(!this.state.options.length) {
             fetchAllSpecies().then(
                 (data) => this.loadedSpeciesList(data)
             );
@@ -31,15 +42,29 @@ class SpeciesSelectBox extends React.Component {
     }
     loadedSpeciesList(data) {
         this.setState({
-            species: data.map(s => (<option className="speciesSelectionBox" key={s.id} value={s.id}>{s.genus.toUpperCase().slice(0,1)}. {s.species}</option>))
+            options: data
         });
     }
+    filterList(search_string) {
+
+    }
+    handleChange(e) {
+        let suggestions = this.state.options;//.map(o=>o.fullname);
+        let species = e.target.value;
+        this.setState({suggestions,species});
+        e.preventDefault();
+    }
     render() {
-        return (<select name="duderonoumous">
-                    {this.state.species}
-                </select>);
+        return (
+            <div className="form-group">
+                <legend htmlFor="speciesInput">Species</legend>
+                <input list="speciesSuggestionBox" type="text" value={this.state.species} name="species" className="form-control" id="speciesInput" onChange={e=>this.handleChange(e)}/>
+                <datalist id="speciesSuggestionBox">
+                    {typeof this.state.suggestions == "string" ? this.state.suggestions : this.state.suggestions.map((s,i)=><option key={i} value={s.id}>{s.fullname}</option>)}
+                </datalist>
+            </div>
+
+        );
 
     }
 }
-
-export default SpeciesSelectBox;

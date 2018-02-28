@@ -1,5 +1,6 @@
 import React from "react";
 import ObservationForm from "./observationForm.jsx";
+import CollectionForm from "./collectionForm.jsx";
 
 class ViewSpecimen extends React.Component {
     constructor(props) {
@@ -13,6 +14,9 @@ class ViewSpecimen extends React.Component {
             this.state.specimen = props.specimen;
         }
         this.state.comments = [];
+        if(props.hasOwnProperty("openTab")) {
+            this.openTab=props.openTab;
+        }
     }
     componentDidMount() {
         this.loadComments();
@@ -56,7 +60,7 @@ class ViewSpecimen extends React.Component {
         return (
             <div className="card">
                 <div className={`card-header text-white bg-${colorFor(this.state.comments.length ? this.state.comments[0].status : null)}`}>
-                    <h1><i>{this.state.specimen.genus} {this.state.specimen.species}</i> (ID: {this.state.specimen.id})</h1>
+                    <h1><i>{this.state.specimen.genus} {this.state.specimen.species}</i> (ID: {this.state.specimen.id}) <a href="#" onClick={e=>{e.preventDefault();this.openTab(`Updating ID#${this.state.specimen.id}`, <CollectionForm collection={this.state.specimen} openTab={this.openTab.bind(this)} />, true);}}>✏️</a></h1>
                 </div>
                 <div className="card-body">
                     Location: {this.state.specimen.location}<br />

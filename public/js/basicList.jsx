@@ -27,7 +27,9 @@ class basicList extends React.Component {
             }
         }
         //this.parseColumnArray = parseColumnArray;
-        this.openTab = props.openTab;
+        if(props.hasOwnProperty("openTab")) {
+            this.openTab=props.openTab;
+        }
     }
     exportToCSV() {
         let fileString = "";
@@ -73,7 +75,7 @@ class basicList extends React.Component {
                     if(this.state.columns[c_key].type=="Link") {
                         contents = record[c_key]; //soon...
                     }
-                    return <td key={idx}>{idx ? contents : <a href="#" onClick={e=>this.openTab(record[c_key], <ViewSpecimen specimen={record} />, true)}>{contents}</a>}</td>
+                    return <td key={idx}>{idx ? contents : <a href="#" onClick={e=>this.openTab(record[c_key], <ViewSpecimen specimen={record} openTab={this.openTab.bind(this)} />, true)}>{contents}</a>}</td>
                 })}
             </tr>
         )

@@ -6,7 +6,9 @@ class QueryList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {query:""};
-        this.openTab = props.openTab;
+        if(props.hasOwnProperty("openTab")) {
+            this.openTab=props.openTab;
+        }
         this.parseColumnArray = parseColumnArray;
     }
     updateQuery(e) {
@@ -26,7 +28,7 @@ class QueryList extends React.Component {
                 data.json().then(
                     d => {
                         if(d.length) {
-                            let c = this.parseColumnArray(Object.keys(d[0]));
+                            let c = Object.keys(d[0]);
                             this.openTab(`${this.state.query}`, <BasicList records={d} columns={c} openTab={this.openTab.bind(this)} />, true);
                             //this.setState({records:d, columns:c});
                         } else {

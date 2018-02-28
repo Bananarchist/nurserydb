@@ -1,6 +1,6 @@
 import React from "react";
 import ListAllSpecimens from "./listAllSpecimens.jsx";
-import CreateNewSpecimen from "./createSpecimen.jsx";
+import CollectionForm from "./collectionForm.jsx";
 import QueryList from "./queryList.jsx";
 import basicList from "./basicList.jsx";
 import ErrorBoundary from "./errorBoundary.jsx";
@@ -99,8 +99,13 @@ class App extends React.Component {
     render() {
         return (
             <div id="prime_container" className="pos-f-t">
+                <nav className="navbar navbar-dark bg-dark">
+                    <button className="navbar-toggler" type='button' data-toggle="collapse" data-target="#mahhamburger">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                </nav>
                 <div className="collapse" id="mahhamburger">
-                    <div className="bg-dark p-4">
+                    <div className="bg-dark p-4 h-100">
                         <ul>
                             <li>
                                 <a href="#" onClick={e=>{e.preventDefault(); this.openBaseListTab();}}>List all</a>
@@ -111,15 +116,15 @@ class App extends React.Component {
                                     <QueryList openTab={this.openTab.bind(this)} />
                                 </div>
                             </li>
-                            <li>Create New Entry</li>
+                            <li>
+                                <a href="#" onClick={e => {
+                                     e.preventDefault();
+                                     this.openTab("New Collection", <CollectionForm />);
+                                }}>Create New Entry</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <nav className="navbar navbar-dark bg-dark">
-                    <button className="navbar-toggler" type='button' data-toggle="collapse" data-target="#mahhamburger">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                </nav>
                     <ul className="nav nav-pills nav-justified bg-secondary">
                     {this.state.tabs.map((t,idx) => {
                         return (
@@ -129,7 +134,7 @@ class App extends React.Component {
                                     this.switchTab(idx, e);
                                 }}>
                                     {t.title}
-                                    <button type="button" className="close" aria-label="Close" onClick={e => {
+                                    <button type="button" className="btn close" aria-label="Close" onClick={e => {
                                         e.preventDefault();
                                         this.deleteTab(idx);
                                     }}>

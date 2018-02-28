@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,9 +71,9 @@
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(21);
-} else {
   module.exports = __webpack_require__(22);
+} else {
+  module.exports = __webpack_require__(23);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
@@ -565,52 +565,6 @@ module.exports = warning;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-function checkDCE() {
-  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
-  if (
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
-    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
-  ) {
-    return;
-  }
-  if (process.env.NODE_ENV !== 'production') {
-    // This branch is unreachable because this function is only called
-    // in production, but the condition is true only in development.
-    // Therefore if the branch is still here, dead code elimination wasn't
-    // properly applied.
-    // Don't change the message. React DevTools relies on it. Also make sure
-    // this message doesn't occur elsewhere in this function, or it will cause
-    // a false positive.
-    throw new Error('^_^');
-  }
-  try {
-    // Verify that the code above has been dead code eliminated (DCE'd).
-    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
-  } catch (err) {
-    // DevTools shouldn't crash React, no matter what.
-    // We should still report in case we break this code.
-    console.error(err);
-  }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // DCE check should happen before ReactDOM bundle executes so that
-  // DevTools can report bad minification during injection.
-  checkDCE();
-  module.exports = __webpack_require__(24);
-} else {
-  module.exports = __webpack_require__(27);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -623,15 +577,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _viewSpecimen = __webpack_require__(36);
+var _viewSpecimen = __webpack_require__(37);
 
 var _viewSpecimen2 = _interopRequireDefault(_viewSpecimen);
 
-var _parseColumnArray = __webpack_require__(18);
+var _parseColumnArray = __webpack_require__(19);
 
 var _parseColumnArray2 = _interopRequireDefault(_parseColumnArray);
 
-var _errorBoundary = __webpack_require__(19);
+var _errorBoundary = __webpack_require__(20);
 
 var _errorBoundary2 = _interopRequireDefault(_errorBoundary);
 
@@ -669,7 +623,9 @@ var basicList = function (_React$Component) {
             }
         }
         //this.parseColumnArray = parseColumnArray;
-        _this.openTab = props.openTab;
+        if (props.hasOwnProperty("openTab")) {
+            _this.openTab = props.openTab;
+        }
         return _this;
     }
 
@@ -756,7 +712,7 @@ var basicList = function (_React$Component) {
                         idx ? contents : _react2.default.createElement(
                             "a",
                             { href: "#", onClick: function onClick(e) {
-                                    return _this5.openTab(record[c_key], _react2.default.createElement(_viewSpecimen2.default, { specimen: record }), true);
+                                    return _this5.openTab(record[c_key], _react2.default.createElement(_viewSpecimen2.default, { specimen: record, openTab: _this5.openTab.bind(_this5) }), true);
                                 } },
                             contents
                         )
@@ -811,7 +767,7 @@ var basicList = function (_React$Component) {
 exports.default = basicList;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -827,7 +783,7 @@ exports.default = basicList;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(23);
+  var ReactPropTypesSecret = __webpack_require__(24);
   var loggedTypeFailures = {};
 }
 
@@ -874,6 +830,52 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 }
 
 module.exports = checkPropTypes;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+function checkDCE() {
+  /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */
+  if (
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' ||
+    typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function'
+  ) {
+    return;
+  }
+  if (process.env.NODE_ENV !== 'production') {
+    // This branch is unreachable because this function is only called
+    // in production, but the condition is true only in development.
+    // Therefore if the branch is still here, dead code elimination wasn't
+    // properly applied.
+    // Don't change the message. React DevTools relies on it. Also make sure
+    // this message doesn't occur elsewhere in this function, or it will cause
+    // a false positive.
+    throw new Error('^_^');
+  }
+  try {
+    // Verify that the code above has been dead code eliminated (DCE'd).
+    __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE(checkDCE);
+  } catch (err) {
+    // DevTools shouldn't crash React, no matter what.
+    // We should still report in case we break this code.
+    console.error(err);
+  }
+}
+
+if (process.env.NODE_ENV === 'production') {
+  // DCE check should happen before ReactDOM bundle executes so that
+  // DevTools can report bad minification during injection.
+  checkDCE();
+  module.exports = __webpack_require__(25);
+} else {
+  module.exports = __webpack_require__(28);
+}
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -1126,7 +1128,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(25);
+var isTextNode = __webpack_require__(26);
 
 /*eslint-disable no-bitwise */
 
@@ -1200,7 +1202,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(7);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1221,19 +1223,26 @@ function fetchAllSpecies() {
         }
     }).then(function (data) {
         return data.json();
+    }).then(function (data) {
+        return data.map(function (r, i) {
+            r.fullname = r.genus + ' ' + r.species;
+            return r;
+        });
     });
 }
 
-var SpeciesSelectBox = function (_React$Component) {
-    _inherits(SpeciesSelectBox, _React$Component);
+var SpeciesSelect = function (_React$Component) {
+    _inherits(SpeciesSelect, _React$Component);
 
-    function SpeciesSelectBox(props) {
-        _classCallCheck(this, SpeciesSelectBox);
+    function SpeciesSelect(props) {
+        _classCallCheck(this, SpeciesSelect);
 
-        var _this = _possibleConstructorReturn(this, (SpeciesSelectBox.__proto__ || Object.getPrototypeOf(SpeciesSelectBox)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (SpeciesSelect.__proto__ || Object.getPrototypeOf(SpeciesSelect)).call(this, props));
 
         _this.state = {
-            species: []
+            options: [],
+            suggestions: "No suggestions",
+            species: ""
         };
         if (_this.props.species && _this.props.species.length) {
             _this.setState({ species: _this.props.species });
@@ -1242,12 +1251,12 @@ var SpeciesSelectBox = function (_React$Component) {
         return _this;
     }
 
-    _createClass(SpeciesSelectBox, [{
+    _createClass(SpeciesSelect, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
 
-            if (!this.state.species.length) {
+            if (!this.state.options.length) {
                 fetchAllSpecies().then(function (data) {
                     return _this2.loadedSpeciesList(data);
                 });
@@ -1257,32 +1266,55 @@ var SpeciesSelectBox = function (_React$Component) {
         key: 'loadedSpeciesList',
         value: function loadedSpeciesList(data) {
             this.setState({
-                species: data.map(function (s) {
-                    return _react2.default.createElement(
-                        'option',
-                        { className: 'speciesSelectionBox', key: s.id, value: s.id },
-                        s.genus.toUpperCase().slice(0, 1),
-                        '. ',
-                        s.species
-                    );
-                })
+                options: data
             });
+        }
+    }, {
+        key: 'filterList',
+        value: function filterList(search_string) {}
+    }, {
+        key: 'handleChange',
+        value: function handleChange(e) {
+            var suggestions = this.state.options; //.map(o=>o.fullname);
+            var species = e.target.value;
+            this.setState({ suggestions: suggestions, species: species });
+            e.preventDefault();
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             return _react2.default.createElement(
-                'select',
-                { name: 'duderonoumous' },
-                this.state.species
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                    'legend',
+                    { htmlFor: 'speciesInput' },
+                    'Species'
+                ),
+                _react2.default.createElement('input', { list: 'speciesSuggestionBox', type: 'text', value: this.state.species, name: 'species', className: 'form-control', id: 'speciesInput', onChange: function onChange(e) {
+                        return _this3.handleChange(e);
+                    } }),
+                _react2.default.createElement(
+                    'datalist',
+                    { id: 'speciesSuggestionBox' },
+                    typeof this.state.suggestions == "string" ? this.state.suggestions : this.state.suggestions.map(function (s, i) {
+                        return _react2.default.createElement(
+                            'option',
+                            { key: i, value: s.id },
+                            s.fullname
+                        );
+                    })
+                )
             );
         }
     }]);
 
-    return SpeciesSelectBox;
+    return SpeciesSelect;
 }(_react2.default.Component);
 
-exports.default = SpeciesSelectBox;
+exports.default = SpeciesSelect;
 
 /***/ }),
 /* 17 */
@@ -1441,6 +1473,121 @@ exports.default = ObservationForm;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _speciesSelect = __webpack_require__(16);
+
+var _speciesSelect2 = _interopRequireDefault(_speciesSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CollectionForm = function (_React$Component) {
+    _inherits(CollectionForm, _React$Component);
+
+    function CollectionForm(props) {
+        _classCallCheck(this, CollectionForm);
+
+        var _this = _possibleConstructorReturn(this, (CollectionForm.__proto__ || Object.getPrototypeOf(CollectionForm)).call(this, props));
+
+        _this.state = {
+
+            created: new Date()
+        };
+        if (props.hasOwnProperty("specimen")) {
+            _this.state.specimenID = props.specimen;
+            //should have this if not a "comment" field
+        }
+        if (props.hasOwnProperty("collection")) {
+            Object.assign(_this.state, props.collection);
+        }
+        if (props.hasOwnProperty("openTab")) {
+            _this.openTab = props.openTab;
+        }
+        return _this;
+    }
+
+    _createClass(CollectionForm, [{
+        key: "handleChange",
+        value: function handleChange(e) {
+            var changestate = {};
+            changestate[e.target.name] = e.target.value;
+            this.setState(changestate);
+            e.preventDefault();
+        }
+    }, {
+        key: "handleSubmit",
+        value: function handleSubmit(e) {}
+    }, {
+        key: "outputFormControl",
+        value: function outputFormControl(key) {
+            var _this2 = this;
+
+            var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "text";
+            var title = arguments[2];
+
+            if (!title) {
+                title = key;
+            }
+            return _react2.default.createElement(
+                "div",
+                { className: "form-group" },
+                _react2.default.createElement(
+                    "legend",
+                    { htmlFor: key + "Input" },
+                    title
+                ),
+                _react2.default.createElement("input", { className: "form-control", type: type, name: key, value: this.state[key], id: key + "Input", onChange: function onChange(e) {
+                        return _this2.handleChange(e);
+                    } })
+            );
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "form",
+                { id: "speciesform" },
+                _react2.default.createElement(_speciesSelect2.default, null),
+                this.outputFormControl("quantity", "number"),
+                this.outputFormControl("size"),
+                this.outputFormControl("planter"),
+                this.outputFormControl("source"),
+                this.outputFormControl("location"),
+                _react2.default.createElement(
+                    "button",
+                    { className: "button", type: "button" },
+                    "Save"
+                )
+            );
+        }
+    }]);
+
+    return CollectionForm;
+}(_react2.default.Component);
+
+exports.default = CollectionForm;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.default = parseColumnArray;
 function parseColumnArray(arr) {
     return arr.reduce(function (a, c) {
@@ -1450,7 +1597,7 @@ function parseColumnArray(arr) {
 }
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1515,7 +1662,7 @@ var ErrorBoundary = function (_React$Component) {
 exports.default = ErrorBoundary;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1525,7 +1672,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(7);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -1533,7 +1680,7 @@ var _speciesSelect = __webpack_require__(16);
 
 var _speciesSelect2 = _interopRequireDefault(_speciesSelect);
 
-var _specimenBox = __webpack_require__(32);
+var _specimenBox = __webpack_require__(33);
 
 var _specimenBox2 = _interopRequireDefault(_specimenBox);
 
@@ -1541,11 +1688,11 @@ var _observationForm = __webpack_require__(17);
 
 var _observationForm2 = _interopRequireDefault(_observationForm);
 
-var _observationList = __webpack_require__(33);
+var _observationList = __webpack_require__(34);
 
 var _observationList2 = _interopRequireDefault(_observationList);
 
-var _app = __webpack_require__(34);
+var _app = __webpack_require__(35);
 
 var _app2 = _interopRequireDefault(_app);
 
@@ -1575,7 +1722,7 @@ window.mountApp = function (element_id) {
 };
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1603,7 +1750,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1629,7 +1776,7 @@ var emptyObject = __webpack_require__(4);
 var invariant = __webpack_require__(5);
 var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(9);
+var checkPropTypes = __webpack_require__(8);
 
 // TODO: this is special because it gets imported during build.
 
@@ -2968,7 +3115,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2987,7 +3134,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3223,7 +3370,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3238,7 +3385,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(26);
+var isNode = __webpack_require__(27);
 
 /**
  * @param {*} object The object to check.
@@ -3251,7 +3398,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3279,7 +3426,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3312,9 +3459,9 @@ var shallowEqual = __webpack_require__(13);
 var containsNode = __webpack_require__(14);
 var focusNode = __webpack_require__(15);
 var emptyObject = __webpack_require__(4);
-var checkPropTypes = __webpack_require__(9);
-var hyphenateStyleName = __webpack_require__(28);
-var camelizeStyleName = __webpack_require__(30);
+var checkPropTypes = __webpack_require__(8);
+var hyphenateStyleName = __webpack_require__(29);
+var camelizeStyleName = __webpack_require__(31);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18681,7 +18828,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18696,7 +18843,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(29);
+var hyphenate = __webpack_require__(30);
 
 var msPattern = /^ms-/;
 
@@ -18723,7 +18870,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18759,7 +18906,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18774,7 +18921,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(31);
+var camelize = __webpack_require__(32);
 
 var msPattern = /^-ms-/;
 
@@ -18802,7 +18949,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18837,13 +18984,6 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/***/ }),
 /* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18852,6 +18992,13 @@ module.exports = camelize;
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18867,23 +19014,23 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _listAllSpecimens = __webpack_require__(35);
+var _listAllSpecimens = __webpack_require__(36);
 
 var _listAllSpecimens2 = _interopRequireDefault(_listAllSpecimens);
 
-var _createSpecimen = __webpack_require__(37);
+var _collectionForm = __webpack_require__(18);
 
-var _createSpecimen2 = _interopRequireDefault(_createSpecimen);
+var _collectionForm2 = _interopRequireDefault(_collectionForm);
 
 var _queryList = __webpack_require__(38);
 
 var _queryList2 = _interopRequireDefault(_queryList);
 
-var _basicList2 = __webpack_require__(8);
+var _basicList2 = __webpack_require__(7);
 
 var _basicList3 = _interopRequireDefault(_basicList2);
 
-var _errorBoundary = __webpack_require__(19);
+var _errorBoundary = __webpack_require__(20);
 
 var _errorBoundary2 = _interopRequireDefault(_errorBoundary);
 
@@ -19019,11 +19166,20 @@ var App = function (_React$Component) {
                 "div",
                 { id: "prime_container", className: "pos-f-t" },
                 _react2.default.createElement(
+                    "nav",
+                    { className: "navbar navbar-dark bg-dark" },
+                    _react2.default.createElement(
+                        "button",
+                        { className: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#mahhamburger" },
+                        _react2.default.createElement("span", { className: "navbar-toggler-icon" })
+                    )
+                ),
+                _react2.default.createElement(
                     "div",
                     { className: "collapse", id: "mahhamburger" },
                     _react2.default.createElement(
                         "div",
-                        { className: "bg-dark p-4" },
+                        { className: "bg-dark p-4 h-100" },
                         _react2.default.createElement(
                             "ul",
                             null,
@@ -19055,18 +19211,16 @@ var App = function (_React$Component) {
                             _react2.default.createElement(
                                 "li",
                                 null,
-                                "Create New Entry"
+                                _react2.default.createElement(
+                                    "a",
+                                    { href: "#", onClick: function onClick(e) {
+                                            e.preventDefault();
+                                            _this4.openTab("New Collection", _react2.default.createElement(_collectionForm2.default, null));
+                                        } },
+                                    "Create New Entry"
+                                )
                             )
                         )
-                    )
-                ),
-                _react2.default.createElement(
-                    "nav",
-                    { className: "navbar navbar-dark bg-dark" },
-                    _react2.default.createElement(
-                        "button",
-                        { className: "navbar-toggler", type: "button", "data-toggle": "collapse", "data-target": "#mahhamburger" },
-                        _react2.default.createElement("span", { className: "navbar-toggler-icon" })
                     )
                 ),
                 _react2.default.createElement(
@@ -19085,7 +19239,7 @@ var App = function (_React$Component) {
                                 t.title,
                                 _react2.default.createElement(
                                     "button",
-                                    { type: "button", className: "close", "aria-label": "Close", onClick: function onClick(e) {
+                                    { type: "button", className: "btn close", "aria-label": "Close", onClick: function onClick(e) {
                                             e.preventDefault();
                                             _this4.deleteTab(idx);
                                         } },
@@ -19129,7 +19283,7 @@ var App = function (_React$Component) {
 exports.default = App;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19145,7 +19299,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _basicList2 = __webpack_require__(8);
+var _basicList2 = __webpack_require__(7);
 
 var _basicList3 = _interopRequireDefault(_basicList2);
 
@@ -19210,7 +19364,7 @@ var ListAllSpecimens = function (_basicList) {
 exports.default = ListAllSpecimens;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19229,6 +19383,10 @@ var _react2 = _interopRequireDefault(_react);
 var _observationForm = __webpack_require__(17);
 
 var _observationForm2 = _interopRequireDefault(_observationForm);
+
+var _collectionForm = __webpack_require__(18);
+
+var _collectionForm2 = _interopRequireDefault(_collectionForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19255,6 +19413,9 @@ var ViewSpecimen = function (_React$Component) {
             _this.state.specimen = props.specimen;
         }
         _this.state.comments = [];
+        if (props.hasOwnProperty("openTab")) {
+            _this.openTab = props.openTab;
+        }
         return _this;
     }
 
@@ -19300,6 +19461,8 @@ var ViewSpecimen = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var _this3 = this;
+
             var colorFor = function colorFor(c) {
                 return { "Good": "success", "Passable": "warning" }[c] || "light";
             };
@@ -19321,7 +19484,14 @@ var ViewSpecimen = function (_React$Component) {
                         ),
                         " (ID: ",
                         this.state.specimen.id,
-                        ")"
+                        ") ",
+                        _react2.default.createElement(
+                            "a",
+                            { href: "#", onClick: function onClick(e) {
+                                    e.preventDefault();_this3.openTab("Updating ID#" + _this3.state.specimen.id, _react2.default.createElement(_collectionForm2.default, { collection: _this3.state.specimen, openTab: _this3.openTab.bind(_this3) }), true);
+                                } },
+                            "\u270F\uFE0F"
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -19375,78 +19545,6 @@ var ViewSpecimen = function (_React$Component) {
 exports.default = ViewSpecimen;
 
 /***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(7);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _speciesSelect = __webpack_require__(16);
-
-var _speciesSelect2 = _interopRequireDefault(_speciesSelect);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var createSpecimen = function createSpecimen() {
-    _reactDom2.default.render(_react2.default.createElement(_speciesSelect2.default, null), document.getElementById('speciesSelectBox'));
-};
-
-var CreateNewSpecimen = function (_React$Component) {
-    _inherits(CreateNewSpecimen, _React$Component);
-
-    function CreateNewSpecimen(props) {
-        _classCallCheck(this, CreateNewSpecimen);
-
-        return _possibleConstructorReturn(this, (CreateNewSpecimen.__proto__ || Object.getPrototypeOf(CreateNewSpecimen)).call(this, props));
-    }
-
-    _createClass(CreateNewSpecimen, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                "form",
-                { id: "speciesform" },
-                _react2.default.createElement(_speciesSelect2.default, null),
-                _react2.default.createElement("input", { className: "form-control", type: "number", name: "quantity" }),
-                _react2.default.createElement("input", { className: "form-control", type: "text", name: "size" }),
-                _react2.default.createElement("input", { className: "form-control", type: "text", name: "planter" }),
-                _react2.default.createElement("input", { className: "form-control", type: "text", name: "source" }),
-                _react2.default.createElement("input", { className: "form-control", type: "text", name: "location" }),
-                _react2.default.createElement(
-                    "button",
-                    { className: "button", type: "button" },
-                    "Save"
-                )
-            );
-        }
-    }]);
-
-    return CreateNewSpecimen;
-}(_react2.default.Component);
-
-exports.default = CreateNewSpecimen;
-
-/***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19459,7 +19557,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _basicList = __webpack_require__(8);
+var _basicList = __webpack_require__(7);
 
 var _basicList2 = _interopRequireDefault(_basicList);
 
@@ -19467,7 +19565,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _parseColumnArray = __webpack_require__(18);
+var _parseColumnArray = __webpack_require__(19);
 
 var _parseColumnArray2 = _interopRequireDefault(_parseColumnArray);
 
@@ -19488,7 +19586,9 @@ var QueryList = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (QueryList.__proto__ || Object.getPrototypeOf(QueryList)).call(this, props));
 
         _this.state = { query: "" };
-        _this.openTab = props.openTab;
+        if (props.hasOwnProperty("openTab")) {
+            _this.openTab = props.openTab;
+        }
         _this.parseColumnArray = _parseColumnArray2.default;
         return _this;
     }
@@ -19514,7 +19614,7 @@ var QueryList = function (_React$Component) {
                 }).then(function (data) {
                     data.json().then(function (d) {
                         if (d.length) {
-                            var c = _this2.parseColumnArray(Object.keys(d[0]));
+                            var c = Object.keys(d[0]);
                             _this2.openTab("" + _this2.state.query, _react2.default.createElement(_basicList2.default, { records: d, columns: c, openTab: _this2.openTab.bind(_this2) }), true);
                             //this.setState({records:d, columns:c});
                         } else {
