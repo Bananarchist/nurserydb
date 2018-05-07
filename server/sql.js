@@ -1,7 +1,7 @@
 var sql = require("promise-mysql");
-var database = "plandy";
+var database = "plandy2";
 var host = `localhost`;
-var auth = require("../../auth.js");
+var auth = require("../auth.js");
 
 function connAndQuery(query) {
     return sql.createConnection({

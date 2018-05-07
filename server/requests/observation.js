@@ -8,4 +8,18 @@ function allObservationsForSpecimen(req, res) {
             return res.json(data)});
 }
 
-module.exports = {allObservationsForSpecimen};
+function saveObservationForSpecimen(req, res) {
+    //how to delineate between new and update...?
+    ob_db.insertObservationForSpecimen(parseInt(req.params.sid,10), {
+        comment: req.body.comment,
+        status: req.body.status,
+        specimen_id: req.params.sid
+    }).then(
+        data => {
+            console.log("submitted data, attempting to return json???");
+            return res.json(data)
+        }
+    );
+}
+
+module.exports = {allObservationsForSpecimen, saveObservationForSpecimen};

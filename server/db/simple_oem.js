@@ -29,7 +29,7 @@ class SimpleOEM {
                     }
                     break;
                 case "INSERT":
-                    q = `${q} INTO ${this.query_set.FROM} (${this.query_set.COLUMNS}) VALUES${this.query_set.VALUES}`
+                    q = `${q} INTO ${this.query_set.FROM} (${this.query_set.COLUMNS}) VALUES(${this.query_set.VALUES})`
                 default: break;
             }
             //clear old values
@@ -40,7 +40,7 @@ class SimpleOEM {
             this.query_set["COLUMNS"] = "*";
             this.query_set["FROM"] = this.table;
             //run connection
-            console.log("running query", q);
+            //console.log("running query", q);
             return this.conn(q);
         }
     }
@@ -51,7 +51,7 @@ class SimpleOEM {
     }
     insert(values) {
         let vals = Array.isArray(values) ? values : Array.from(arguments);
-        this.query({"VALUES":`(${vals.map(v=>`"${v}"`).join(", ")})`, "ACTION": "INSERT"});
+        this.query({"VALUES":`${vals.map(v=>`"${v}"`).join(", ")}`, "ACTION": "INSERT"});
         return this;
     }
     match(test) {

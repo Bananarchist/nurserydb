@@ -1,0 +1,27 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="h-100" id="categoryinfo">
+        <div class="">
+                <table class="table">
+                    <thead>
+                        <!--<tr>
+                            <td v-for="key in Object.keys(species)">{{ key }}</td>
+                        </tr>-->
+                    </thead>
+                    <tbody>
+                        <tr v-for="s in all_species">
+                            <td v-for="key in Object.keys(s)">{{ s[key]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+    <script src="./categoryVueSingleton.js"></script>
+</body>
+</html>

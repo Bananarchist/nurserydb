@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body>
+
+
+    <div class="h-100" id="speciesinfo">
+        <h2>{{ taxa }}</h2>
+        <h3>{{ common }}</h3>
+        <h5><a v-bind:href="'viewACategory.html?name='+category">{{ category }}</a></h5>
+        <p> {{ description }}
+        Size: {{ size }}<br />
+        Wildlife
+        <p>{{ wildlife }}</p>
+        <div id="tags"><a v-for="t in tags" :href="'tags/'+t">t</a></div>
+        <h3>Collections in inventory</h3>
+        <table class="table">
+            <thead>
+                <tr><td>ID</td><td>Size</td><td>Price</td><td>Quantity</td><td>For Sale</td><td>Credit</td><td>Source</td><td>Location</td><td>Added to Inventory</td></tr>
+            </thead>
+            <tbody>
+                <tr v-for="c in all_collections"><td><a v-bind:href="'viewACollection.html?id='+c.id">{{c.id}}</a></td><td>{{c.size}}</td><td>{{c.price}}</td><td>{{c.quantity}}</td><td>{{c.for_sale}}</td><td>{{c.credit}}</td><td>{{c.source}}</td><td>{{c.location}}</td><td>{{c.added_to_inventory}}</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="./speciesVueSingleton.js"></script>
+</body>
+</html>
