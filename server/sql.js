@@ -1,14 +1,16 @@
 var sql = require("promise-mysql");
 var database = "plandy2";
 var host = `localhost`;
-var auth = require("../auth.js");
+if(!process.env.production) {
+    var auth = require("../auth.js");
+}
 
 function connAndQuery(query) {
     return sql.createConnection({
-        host: host,
-        user: `${auth.username}`,
-        password: `${auth.password}`,
-        database: database
+        host: process.env.DB_HOST,
+        user: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
     }).then(function(conn) {
         var result = conn.query(query);
         conn.end();
