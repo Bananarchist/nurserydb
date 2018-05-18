@@ -1,20 +1,24 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div class="container-fluid px-0" id="nursery">
-        <nav>
-            <ul class="nav nav-pills nav-fill">
-                <li v-for="(l, index) in links" class="nav-item"><a class="nav-link" href="#" @click="current_view=l.view" v-bind:class="{active: current_view==l.view}">{{l.title}}</a></li>
-            </ul>
-        </nav>
-        <div class="container-fluid h-100" v-bind:is="current_view" v-on:open-tab="onOpenTab"></div>
-        <footer class="fixed-bottom">
-            Stuff...
-        </footer>
+    <div id="nursery">
+        <div class="container-fluid px-0">
+            <nav>
+                <ul class="nav nav-pills nav-fill">
+                    <li v-for="(l, index) in links" class="nav-item"><router-link class="nav-link" v-bind:to="l.url">{{l.title}}</router-link></li>
+                </ul>
+            </nav>
+            <router-view class="main_view"></router-view>
+            <footer class="fixed-bottom">
+                Stuff...
+            </footer>
+        </div>
     </div>
     <script src="./viewVue.js"></script>
 </body>
