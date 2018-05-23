@@ -4,6 +4,10 @@ function getAllSpecies() {
     return sql("SELECT * FROM species;");
 }
 
+function getAllSpeciesShort() {
+    return sql("SELECT id, taxa, common FROM species ORDER BY taxa;");
+}
+
 function getAllCollections() {
     return sql("SELECT c.*, s.taxa, s.common FROM collection AS c JOIN species AS s ON c.species_id=s.id;");
 }
@@ -49,5 +53,5 @@ function getSpeciesByTag(tag) {
 }
 
 module.exports = {
-    getAllSpecies, getAllCollections, getAllCollectionsFull, getAllPlantTagData, getSpeciesByID, getCollectionByID, getCollectionByIDFull, getPlantTagDataByID, searchSpeciesByField, getSpeciesByCategory, getCollectionsBySpeciesID,
+    getAllSpecies, getAllSpeciesShort, getAllCollections, getAllCollectionsFull, getAllPlantTagData, getSpeciesByID, getCollectionByID, getCollectionByIDFull, getPlantTagDataByID, searchSpeciesByField, getSpeciesByCategory, getCollectionsBySpeciesID,
 }

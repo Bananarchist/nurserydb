@@ -1,20 +1,28 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Plandy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <div id="mainContent"></div>
-    <script src="index.js"></script>
-    <script>
-        mountApp("mainContent");
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <div id="nursery">
+        <div class="container-fluid px-0">
+            <!--<div class="align-right">
+                <button type="button" class="btn btn-primary" @click="authenticate">Authenticate</button>
+            </div>-->
+            <nav>
+                <ul class="nav nav-pills nav-fill">
+                    <li v-for="(l, index) in links" class="nav-item"><router-link class="nav-link" v-bind:to="l.url">{{l.title}}</router-link></li>
+                </ul>
+            </nav>
+            <router-view class="main_view container-fluid px-0"></router-view>
+            <!--<footer class="fixed-bottom">
+                Stuff...
+            </footer>-->
+        </div>
+    </div>
+    <script src="./index.js"></script>
 </body>
-
 </html>

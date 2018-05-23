@@ -13,6 +13,15 @@ function jsonAllSpecies(req, res) {
     );
 }
 
+function jsonAllSpeciesShort(req, res) {
+    getters.getAllSpeciesShort()
+    .then(
+        data => {
+            return res.json(data);
+        }
+    );
+}
+
 function jsonAllCollections(req, res) {
     getters.getAllCollections()
     .then(
@@ -58,6 +67,52 @@ function jsonGetCollectionBySpeciesID(req, res) {
     );
 }
 
+function jsonCreateCollection(req, res) {
+    //check password
+    //post
+/*    putters.putCollection(req.body)
+    .then(
+        data =>
+        {
+            console.log(data);
+            return res.json(data);
+        }
+    )
+    .catch(data=>{console.log(data);})*/
+    return res.json({msg:"Still in progress!"});
+}
+
+function jsonDeleteCollection(req, res) {
+    //check password
+/*    delters.deleteCollection(parseInt(req.params.id,10))
+    .then(
+        data => {
+            return res.json(data);
+        }
+    )
+    .catch(
+        data => {
+            console.log(data);
+        }
+    )*/
+    return res.json({msg:"Still in progress!"});
+}
+
+function jsonEditCollection(req, res) {
+    //check password
+    //post
+    /*posters.postCollection(parseInt(req.params.id, 10), req.body)
+    .then(
+        data =>
+        {
+            console.log(data);
+            return res.json(data);
+        }
+    )
+    .catch(data=>{console.log(data);})*/
+    return res.json({msg:"Still in progress!"});
+}
+
 module.exports = {
-    jsonAllSpecies, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID
+    jsonAllSpecies, jsonAllSpeciesShort, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID, jsonCreateCollection, jsonEditCollection, jsonDeleteCollection
 }
