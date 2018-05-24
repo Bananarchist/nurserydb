@@ -25,14 +25,20 @@ var app = new Vue({
     data: {
         links: [
             {
-                title: "Collections",
-                component: "collection-list",
-                url: "/collection/all",
+                title: "All Collections",
+                name: "view_all_collections",
             },
             {
-                title: "Species",
-                component: "species-list",
-                url: "/species/all",
+                title: "All Species",
+                name: "view_all_species",
+            },
+            {
+                title: "Add Species",
+                name: "edit_species"
+            },
+            {
+                title: "Add Collection",
+                name: "edit_collection"
             }
         ],
         inputPass: "",
