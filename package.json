@@ -4,7 +4,8 @@
   "description": "Front/backend for a plant nursery database",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "heroku-postbuild": "webpack -p"
   },
   "repository": "https://github.com/Bananarchist/nurserydb",
   "author": "Zach Holker",

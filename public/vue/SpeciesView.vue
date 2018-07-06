@@ -40,6 +40,7 @@ export default {
     components: {
         tableView
     },
+    
     data() {
         return {
             loading: false,
