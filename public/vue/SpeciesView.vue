@@ -87,7 +87,7 @@ export default {
             .then(data => {
                 this.taxa = data.taxa;
                 this.common = data.common;
-                this.tags = data.tags.split(",");
+                this.tags = data.tags ? data.tags.split(",") : "";
                 this.category = data.category;
                 this.size = data.size;
                 this.wildlife = data.wildlife;
