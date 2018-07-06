@@ -11,14 +11,15 @@
             </div>
             <div class="form-group">
                 <label for="formData.category">Category</label>
-                <select class="form-control" v-model="formData.category" id="category">
-                    <option value="Perennials, Vines, Ferns">Perennials, Vines, Ferns</option>
-                    <option value="Trees & Shrubs">Trees & Shrubs</option>
-                    <option value="Rain Garden Emergents & Perennials">Rain Garden Emergents & Perennials</option>
-                </select>
+                <input list="category_options" type="text" class="form-control" v-model="formData.category" id="category" placeholder="Trees & Shrubs" />
+                <datalist id="category_options">
+                    <option value="Perennials, Vines, Ferns" />
+                    <option value="Trees & Shrubs" />
+                    <option value="Rain Garden Emergents & Perennials" />
+                </datalist>
             </div>
             <div class="form-group">
-                <label for="wildlife">Wildlife Interactions</label>
+                <label for="wildlife">Wildlife interactions</label>
                 <textarea class="form-control" id="wildlife" placeholder="Deer will eat these" v-model="formData.wildlife"></textarea>
             </div>
             <div class="form-group">
@@ -27,10 +28,25 @@
             </div>
             <div class="form-group">
                 <label for="tags">Tags</label>
-                <input type="text" class="form-control" id="tags" placeholder="Waterwise, edible fruit" v-model="tags" />
+                <input type="text" class="form-control" id="tags" placeholder="Waterwise, edible fruit" v-model="formData.tags" />
             </div>
             <button type="button" class="btn btn-primary" @click="saveChanges">Save</button>
         </form>
+        <div class="modal" id="savingProgressModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Saving species</h5>
+                    </div>
+                    <div class="modal-content">
+                        <p>You will be redirected upon completion of your request</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -47,6 +63,7 @@ export default {
                 category: "",
                 wildlife: "",
                 description: "",
+                tags: "",
             },
             _tags: [],
             editing: !!this.$route.params.id,
@@ -56,20 +73,7 @@ export default {
             saving: false,
         }
     },
-    computed: {
-        tags: {
-            get() {
-                return this._tags.join();
-            },
-            set(v) {
-                if(typeof v == "string") {
-                    this._tags = v.split(",");
-                } else {
-                    this._tags = this._tags;
-                }
-            }
-        }
-    },
+    computed: {},
     created() {
         var sequencer = Promise.resolve();
         if(this.editing && this.$route.params.id) {
@@ -80,6 +84,8 @@ export default {
             //sequencer.then(
             //    () => this.fetchCollection(this.$route.params.id)
             //)
+        } else {
+            this.loaded_s = true;
         }
     },
     methods: {
@@ -123,12 +129,11 @@ export default {
             .then(data=> {
                 //this.species = data;
                 Object.keys(this.formData).forEach(k=>{if(!!data[0][k]) { this.formData[k] = data[0][k]}});
-                    this.tags = data[0].tags || "";
                 this.loaded_s = true;
             });
         },
         valid() {
-            return false; //lol
+            return true; //lol
         },
         saveChanges() {
             if(this.valid()) {
@@ -146,11 +151,15 @@ export default {
                 .then(data=>data.json())
                 .then(data=> {
                     console.log(data);
-                    //get id
-                    //redirect to collection view/id
+                    $("#savingProgressModal").modal("hide");
                     this.saving = false;
+                    if(this.editing) {
+                        this.$router.push({name:"view_species_by_id", params:{id:this.id}});
+                    } else {
+                        this.$router.push({name:"view_species_by_id", params:{id:data.insertId}});
+                    }
                 });
-
+                $("#savingProgressModal").modal("show");
             }
         },
     }

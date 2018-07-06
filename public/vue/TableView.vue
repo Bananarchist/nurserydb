@@ -13,11 +13,14 @@
                 <editable-row v-for="(c, index) in list" v-bind:columns="columns" v-bind:row_data="c" v-bind:table="table" v-bind:key="c.id"></editable-row>
             </tbody>
         </table>
-        <ul class="pagination justify-content-center" v-if="pages">
+        <ul class="pagination justify-content-center mb-2" v-if="pages && (pages-1)">
             <li class="page-item" :class="{'disabled':!current_page}"><a class="page-link" @click="goToPage(current_page-1)">Previous</a></li>
             <li v-for="(_,page) in Array(pages)" :class="{'active':current_page==page, 'page-item':true}" ><a class="page-link" @click="goToPage(page)" :key="page">{{ page + 1 }}</a></li>
             <li class="page-item" :class="{'disabled':current_page+1==pages}"><a class="page-link" @click="goToPage(current_page+1)">Next</a></li>
         </ul>
+        <!--<footer id="tablefooter" class="fixed-bottom align-middle text-right mt-2">
+            <button type="button" class="btn btn-primary" @click="exportView()">Export to CSV</button><button type="button" class="btn btn-primary" @click="clearFilters()">Clear Filters</button>
+        </footer>-->
     </div>
 </template>
 
@@ -53,7 +56,7 @@ export default {
             },
             limit: {
                 start: 0,
-                run: 100,
+                run: 50,
             },
             current_page: 0,
         }

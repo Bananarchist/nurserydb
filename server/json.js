@@ -4,115 +4,76 @@ var putters = require("./json.put");
 var posters = require("./json.post");
 var delters = require("./json.delete");
 
-function jsonAllSpecies(req, res) {
-    getters.getAllSpecies()
-    .then(
+let jsonwrap = function(res, p, log=false) {
+    return p.then(
         data => {
+            if(log) console.log(data);
             return res.json(data);
+        },
+        error => {
+            console.log(error);
         }
-    );
+    )
+}
+
+function jsonAllSpecies(req, res) {
+    jsonwrap(res, getters.getAllSpecies());
 }
 
 function jsonAllSpeciesShort(req, res) {
-    getters.getAllSpeciesShort()
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getAllSpeciesShort());
 }
 
 function jsonAllCollections(req, res) {
-    getters.getAllCollections()
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getAllCollections());
 }
 
 function jsonGetSpeciesByID(req, res) {
-    getters.getSpeciesByID(parseInt(req.params.id,10))
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getSpeciesByID(parseInt(req.params.id,10)));
 }
 
 function jsonGetSpeciesByCategory(req, res) {
-    getters.getSpeciesByCategory(req.params.category)
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getSpeciesByCategory(req.params.category));
 }
 
 function jsonGetCollectionByID(req, res) {
-    getters.getCollectionByID(parseInt(req.params.id,10))
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getCollectionByID(parseInt(req.params.id,10)));
 }
 
 function jsonGetCollectionBySpeciesID(req, res) {
-    getters.getCollectionsBySpeciesID(parseInt(req.params.id,10))
-    .then(
-        data => {
-            return res.json(data);
-        }
-    );
+    jsonwrap(res, getters.getCollectionsBySpeciesID(parseInt(req.params.id,10)));
 }
 
 function jsonCreateCollection(req, res) {
     //check password
-    //post
-/*    putters.putCollection(req.body)
-    .then(
-        data =>
-        {
-            console.log(data);
-            return res.json(data);
-        }
-    )
-    .catch(data=>{console.log(data);})*/
-    return res.json({msg:"Still in progress!"});
+    jsonwrap(res, putters.putCollection(req.body), true);
 }
 
 function jsonDeleteCollection(req, res) {
-    //check password
-/*    delters.deleteCollection(parseInt(req.params.id,10))
-    .then(
-        data => {
-            return res.json(data);
-        }
-    )
-    .catch(
-        data => {
-            console.log(data);
-        }
-    )*/
-    return res.json({msg:"Still in progress!"});
+    jsonwrap(res, delters.deleteCollection(parseInt(req.params.id,10)), true);
 }
 
 function jsonEditCollection(req, res) {
+    jsonwrap(res, posters.postCollection(parseInt(req.params.id, 10), req.body), true);
+}
+
+function jsonCreateSpecies(req, res) {
     //check password
-    //post
-    /*posters.postCollection(parseInt(req.params.id, 10), req.body)
-    .then(
-        data =>
-        {
-            console.log(data);
-            return res.json(data);
-        }
-    )
-    .catch(data=>{console.log(data);})*/
-    return res.json({msg:"Still in progress!"});
+    jsonwrap(res, putters.putSpecies(req.body), true);
+}
+
+function jsonDeleteSpecies(req, res) {
+    jsonwrap(res, delters.deleteSpecies(parseInt(req.params.id,10)), true);
+}
+
+function jsonEditSpecies(req, res) {
+    jsonwrap(res, posters.postSpecies(parseInt(req.params.id, 10), req.body), true);
+}
+
+function jsonEditCategory(req, res) {
+    jsonwrap(res, posters.postCategory(req.params.category, req.body), true);
 }
 
 module.exports = {
-    jsonAllSpecies, jsonAllSpeciesShort, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID, jsonCreateCollection, jsonEditCollection, jsonDeleteCollection
+    jsonAllSpecies, jsonAllSpeciesShort, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID, jsonCreateCollection, jsonEditCollection, jsonDeleteCollection, jsonEditSpecies, jsonCreateSpecies, jsonDeleteSpecies, jsonEditCategory
 }

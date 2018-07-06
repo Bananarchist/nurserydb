@@ -5,6 +5,8 @@ import AllSpecies from "./vue/AllSpecies.vue";
 import AllCollections from "./vue/AllCollections.vue";
 import CollectionEdit from "./vue/CollectionEdit.vue";
 import SpeciesEdit from "./vue/SpeciesEdit.vue";
+import CategoryEdit from "./vue/CategoryEdit.vue";
+import store from "./c_store.js";
 
 const routes = [
     {path: "/collection/all", component: AllCollections, name: "view_all_collections"},
@@ -12,8 +14,11 @@ const routes = [
     {path: "/species/:id", component: SpeciesView, name: "view_species_by_id"},
     {path: "/collection/:id", component: CollectionView, name: "view_collection_by_id"},
     {path: "/species/category/:id", component: CategoryView, name: "view_category"},
+    {path: "/species/category/:id/edit", component: CategoryEdit, name: "edit_category"},
     {path: "/collection/:id/edit", component: CollectionEdit, name: "edit_collection"},
     {path: "/species/:id/edit", component: SpeciesEdit, name: "edit_species"},
+    {path: "/create/collection", component: CollectionEdit, name: "create_collection"},
+    {path: "/create/species", component: SpeciesEdit, name: "create_species"}
 ];
 
 const router = new VueRouter({
@@ -34,13 +39,14 @@ var app = new Vue({
             },
             {
                 title: "Add Species",
-                name: "edit_species"
+                name: "create_species"
             },
             {
                 title: "Add Collection",
-                name: "edit_collection"
+                name: "create_collection"
             }
         ],
+        shared: store.data,
         inputPass: "",
     },
     methods: {
@@ -52,10 +58,10 @@ var app = new Vue({
                     "accept": "application/json"
                 },
                 method:"POST",
-                body: JSON.stringify({password:"1994"})
+                body: JSON.stringify({password:""})
             })
             .then(data=> {
-                sessionStorage.setItem("pass", "1994");
+                sessionStorage.setItem("pass", "");
             })
             .catch(data=> {
                 console.log(data);

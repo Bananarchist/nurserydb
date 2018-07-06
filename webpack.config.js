@@ -1,7 +1,7 @@
 const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
-module.exports = {
+var config = {
     entry: "./public/viewVue.js",
     output: {
         path: path.resolve("public"),
@@ -13,8 +13,19 @@ module.exports = {
             {test: /\.vue$/, loader: "vue-loader", exclude: /node_modules/}
         ]
     },
-    devtool: "source-map",
     plugins: [
         new VueLoaderPlugin()
     ]
-}
+};
+
+module.exports = (env, argv) => {
+    if(argv.mode === "development") {
+        config.devtool = "source-map";
+    }
+
+    if(argv.mode === "production") {
+
+    }
+
+    return config;
+};

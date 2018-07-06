@@ -7,11 +7,29 @@
         Size: {{ size }}<br />
         Wildlife
         <p>{{ wildlife }}</p>
-        <div id="tags"><a v-for="t in tags" :href="'tags/'+t">t</a></div>
+        <div id="tags"><a class="btn btn-outline-info btn-sm" v-for="t in tags" :href="'tags/'+t">{{t}}</a></div>
         <router-link :to="{name: 'edit_species', params:{id}}" class="btn btn-primary" v-if="authenticated">Edit this species</router-link>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this species</button>
         <h3>Collections in inventory</h3>
         <div class="main_view">
-            <table-view v-bind:collection="all_collections" v-bind:table="'collection'"></table-view>
+            <table-view v-bind:collection="all_collections" v-bind:table="'collection'" v-bind:headers="['id','size','location','quantity','for_sale','price','source','added_to_inventory','credit']"></table-view>
+        </div>
+        <div class="modal" id="deleteConfirmationModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete {{ taxa }} from database?</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span area-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        This will also delete the {{ all_collections.length }} associated collections
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" @click="handleDelete()">Yes</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -69,7 +87,7 @@ export default {
             .then(data => {
                 this.taxa = data.taxa;
                 this.common = data.common;
-                this.tags = data.tags;
+                this.tags = data.tags.split(",");
                 this.category = data.category;
                 this.size = data.size;
                 this.wildlife = data.wildlife;
@@ -80,6 +98,23 @@ export default {
         },
         authenticated() {
             return true;
+        },
+        handleDelete() {
+            //send delete
+            //onload, redirect to allspecies
+            fetch(`/species/${this.id}`, {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+                }
+            })
+            .then(data=>data.json())
+            .then(data=> {
+                $("#deleteConfirmationModal").modal("hide");
+                //this.saving = false;
+                this.$router.push({name:"view_all_species", params:{id:this.id}});
+            });
         }
     }
 };

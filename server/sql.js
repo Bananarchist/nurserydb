@@ -5,6 +5,7 @@ if(!process.env.production) {
     var auth = require("../auth.js");
 }
 
+
 function connAndQuery(query) {
     return sql.createConnection({
         host: process.env.DB_HOST,

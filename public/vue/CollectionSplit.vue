@@ -37,26 +37,12 @@
             </div>
             <button type="button" class="btn btn-primary" @click="saveChanges">Save</button>
         </form>
-        <div class="modal" id="savingProgressModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Saving collection</h5>
-                    </div>
-                    <div class="modal-content">
-                        <p>You will be redirected upon completion of your request</p>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:75%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
 import store from "../c_store.js";
+import CollectionEdit from "./CollectionEdit.vue";
 export default {
     props: ["collection"],
     data() {
@@ -122,14 +108,13 @@ export default {
             });
         },
         valid() {
-            return true; //lol
+            return false; //lol
         },
         saveChanges() {
             if(this.valid()) {
                 let method = this.editing ? "POST" : "PUT";
-                let url = `/collection/${this.editing ? this.id : ""}`;
+                let url = `/collection/${this.editing ? this.id : ""}`
                 this.saving = true;
-                $("#savingProgressModal").modal("show");
                 fetch(url, {
                     method,
                     headers: {
@@ -143,14 +128,9 @@ export default {
                     console.log(data);
                     //get id
                     //redirect to collection view/id
-                    $("#savingProgressModal").modal("hide");
                     this.saving = false;
-                    if(this.editing) {
-                        this.$router.push({name:"view_collection_by_id", params:{id:this.id}});
-                    } else {
-                        this.$router.push({name:"view_collection_by_id", params:{id:data.insertId}});
-                    }
                 });
+
             }
         },
     }

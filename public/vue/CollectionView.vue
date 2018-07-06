@@ -10,7 +10,21 @@
                 <tr><td>{{ size }}</td><td>{{ price }}</td><td>{{ for_sale }}</td><td>{{ quantity }}</td></tr>
             </tbody>
         </table>
-        <router-link :to="{name: 'edit_collection', params:{id}}" class="btn btn-primary" v-if="authenticated">Edit this collection</router-link>
+        <router-link :to="{name: 'edit_collection', params:{id}}" class="btn btn-primary">Edit this collection</router-link><button class="btn btn-primary">Split this collection</button><button class="btn btn-warning" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this collection</button>
+        <div class="modal" id="deleteConfirmationModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete this {{ taxa }} collection?</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span area-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger" @click="handleDelete()">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -65,6 +79,23 @@ export default {
         },
         authenticated() {
             return true;
+        },
+        handleDelete() {
+            fetch(`/collection/${this.id}`, {
+                method: "DELETE",
+                headers: {
+                    "content-type": "application/json",
+                    "accept": "application/json"
+                }
+            })
+            .then(data=>data.json())
+            .then(data=> {
+                $("#deleteConfirmationModal").modal("hide");
+                //this.saving = false;
+                this.$router.push({name:"view_all_collections", params:{id:this.id}});
+            });
+            //send delete
+            //onload, redirect to allcollections
         }
     }
 }

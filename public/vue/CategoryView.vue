@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>{{ cat }}</h2>
+        <h2>{{ cat }} <small class="text-muted"><router-link :to="{name: 'edit_category', params:{id}}">edit</router-link></small></h2>
         <collection-list v-bind:collection="list" v-bind:table="'species'" v-if="loaded"></collection-list>
         <span v-if="!loaded">Loading gimma second...</span>
     </div>
@@ -17,6 +17,7 @@ export default {
             loaded: false,
             list: [],
             cat: this.$route.params.id,
+            id: this.$route.params.id
         }
     },
     created() {

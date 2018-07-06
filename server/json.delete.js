@@ -1,7 +1,10 @@
 var sql = require("./sql");
 
 function deleteSpecies(id) {
-    return sql(`DELETE FROM species WHERE id=${id}`);
+    return Promise.all([
+        sql(`DELETE FROM species WHERE id=${id}`),
+        sql(`DELETE FROM collection WHERE species_id=${id}`)
+    ]);
 }
 
 function deleteCollection(id) {
