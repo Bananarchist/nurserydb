@@ -53,5 +53,5 @@ function getSpeciesByTag(tag) {
 }
 
 module.exports = {
-    getAllSpecies, getAllSpeciesShort, getAllCollections, getAllCollectionsFull, getAllPlantTagData, getSpeciesByID, getCollectionByID, getCollectionByIDFull, getPlantTagDataByID, searchSpeciesByField, getSpeciesByCategory, getCollectionsBySpeciesID,
+    getAllSpecies, getAllSpeciesShort, getAllCollections, getAllCollectionsFull, getAllPlantTagData, getSpeciesByID, getCollectionByID, getCollectionByIDFull, getPlantTagDataByID, searchSpeciesByField, getSpeciesByCategory, getCollectionsBySpeciesID, getSpeciesByTag
 }

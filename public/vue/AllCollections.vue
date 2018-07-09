@@ -7,6 +7,7 @@
 
 <script>
 import tableView from "./TableView.vue";
+import moment from "moment";
 export default {
     components: {
         collectionList: tableView
@@ -27,13 +28,15 @@ export default {
                 headers: {
                     "content-type": "application/json",
                     "accept": "application/json",
-                    "Authorization": `Basic ${btoa("admin:1994")}`
                 },
                 method:"GET",
             })
             .then(data=>data.json())
             .then(data=> {
-                this.collections = data;
+                this.collections = data.map(c => {
+                    c.added_to_inventory = moment(c.added_to_inventory);
+                    return c;
+                });
                 this.loaded = true;
             });
         }

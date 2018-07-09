@@ -1,16 +1,21 @@
 <template>
     <div id="collectioninfo">
-        <h2><router-link :to="{name: 'view_species_by_id', params: {id:species_id}}">{{common}} (<i>{{ taxa }}</i>)</router-link></h2><router-link
+        <h2><router-link :to="{name: 'view_species_by_id', params: {id:species_id}}">{{common}} (<i>{{ taxa }}</i>)</router-link>
+            <div class="btn-group mx-2">
+                <router-link class="btn px-1 py-1" :to="{name: 'edit_collection', params:{id}}" v-if="authenticated">✏️</router-link>
+                <router-link class="btn px-1 py-1" :to="{name:'split_collection', params:{id}}">✂️</router-link>
+                <a class="btn px-1 py-1" data-toggle="modal" data-target="#deleteConfirmationModal">🗑</a>
+            </div>
+        </h2>
         <h5><router-link :to="{name: 'view_category', params: {category}}">{{ category }}</router-link></h5>
         <table class="table">
             <thead>
-                <tr><th>Size</th><th>Price</th><th>For Sale</th><th>Total</th></tr>
+                <tr><th scope="col">Size</th><th scope="col">Price</th><th scope="col">For Sale</th><th scope="col">Total</th></tr>
             </thead>
             <tbody>
-                <tr><td>{{ size }}</td><td>{{ price }}</td><td>{{ for_sale }}</td><td>{{ quantity }}</td></tr>
+                <tr><td scope="row">{{ size }}</td><td>{{ price }}</td><td>{{ for_sale }}</td><td>{{ quantity }}</td></tr>
             </tbody>
         </table>
-        <router-link :to="{name: 'edit_collection', params:{id}}" class="btn btn-primary">Edit this collection</router-link><button class="btn btn-primary">Split this collection</button><button class="btn btn-warning" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this collection</button>
         <div class="modal" id="deleteConfirmationModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

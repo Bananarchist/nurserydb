@@ -32,6 +32,10 @@ function jsonGetSpeciesByID(req, res) {
     jsonwrap(res, getters.getSpeciesByID(parseInt(req.params.id,10)));
 }
 
+function jsonGetSpeciesByTag(req, res) {
+    jsonwrap(res, getters.getSpeciesByTag(req.params.tag));
+}
+
 function jsonGetSpeciesByCategory(req, res) {
     jsonwrap(res, getters.getSpeciesByCategory(req.params.category));
 }
@@ -75,5 +79,5 @@ function jsonEditCategory(req, res) {
 }
 
 module.exports = {
-    jsonAllSpecies, jsonAllSpeciesShort, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID, jsonCreateCollection, jsonEditCollection, jsonDeleteCollection, jsonEditSpecies, jsonCreateSpecies, jsonDeleteSpecies, jsonEditCategory
+    jsonAllSpecies, jsonAllSpeciesShort, jsonAllCollections, jsonGetSpeciesByID, jsonGetSpeciesByCategory, jsonGetCollectionByID, jsonGetCollectionBySpeciesID, jsonCreateCollection, jsonEditCollection, jsonDeleteCollection, jsonEditSpecies, jsonCreateSpecies, jsonDeleteSpecies, jsonEditCategory, jsonGetSpeciesByTag
 }

@@ -1,15 +1,14 @@
 <template>
     <div id="speciesinfo">
-        <h2>{{ taxa }}</h2>
+        <h2>{{ taxa }} <div class="btn-group mx-2"><router-link class="btn px-1 py-1" :to="{name: 'edit_species', params:{id}}" v-if="authenticated">✏️</router-link><a class="btn px-1 py-1" data-toggle="modal" data-target="#deleteConfirmationModal">🗑</a></div></h2>
         <h3>{{ common }}</h3>
         <h5><router-link v-bind:to="'/species/category/'+category">{{ category }}</router-link></h5>
         <p> {{ description }}
         Size: {{ size }}<br />
         Wildlife
         <p>{{ wildlife }}</p>
-        <div id="tags"><a class="btn btn-outline-info btn-sm" v-for="t in tags" :href="'tags/'+t">{{t}}</a></div>
-        <router-link :to="{name: 'edit_species', params:{id}}" class="btn btn-primary" v-if="authenticated">Edit this species</router-link>
-        <button class="btn btn-warning" data-toggle="modal" data-target="#deleteConfirmationModal">Delete this species</button>
+        <div id="tags"><router-link class="btn btn-outline-info btn-sm" v-for="tag in tags" :to="{name: 'view_tag', params:{tag}}" :key="tag">{{tag}}</router-link></div>
+
         <h3>Collections in inventory</h3>
         <div class="main_view">
             <table-view v-bind:collection="all_collections" v-bind:table="'collection'" v-bind:headers="['id','size','location','quantity','for_sale','price','source','added_to_inventory','credit']"></table-view>
@@ -40,7 +39,7 @@ export default {
     components: {
         tableView
     },
-    
+
     data() {
         return {
             loading: false,

@@ -27,6 +27,10 @@ category_routing
     .get("/:category", json.jsonGetSpeciesByCategory)
     .post("/:category", json.jsonEditCategory);
 
+var tag_routing = express.Router();
+tag_routing
+    .get("/:tag", json.jsonGetSpeciesByTag);
+
 var admin_routing = express.Router();
 admin_routing
     .post("/", function(req, res) {
@@ -40,5 +44,5 @@ admin_routing
     });
 
 module.exports = {
-    species_routing, collection_routing, category_routing, admin_routing
+    species_routing, collection_routing, category_routing, admin_routing, tag_routing
 };

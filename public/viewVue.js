@@ -6,6 +6,10 @@ import AllCollections from "./vue/AllCollections.vue";
 import CollectionEdit from "./vue/CollectionEdit.vue";
 import SpeciesEdit from "./vue/SpeciesEdit.vue";
 import CategoryEdit from "./vue/CategoryEdit.vue";
+import CollectionCreate from "./vue/CollectionCreate.vue";
+import SpeciesCreate from "./vue/SpeciesCreate.vue";
+import TagView from "./vue/TagView.vue";
+import CollectionSplit from "./vue/CollectionSplit.vue";
 import store from "./c_store.js";
 
 const routes = [
@@ -16,9 +20,11 @@ const routes = [
     {path: "/species/category/:id", component: CategoryView, name: "view_category"},
     {path: "/species/category/:id/edit", component: CategoryEdit, name: "edit_category"},
     {path: "/collection/:id/edit", component: CollectionEdit, name: "edit_collection"},
+    {path: "/collection/:id/split", component: CollectionSplit, name: "split_collection"},
     {path: "/species/:id/edit", component: SpeciesEdit, name: "edit_species"},
-    {path: "/create/collection", component: CollectionEdit, name: "create_collection"},
-    {path: "/create/species", component: SpeciesEdit, name: "create_species"}
+    {path: "/create/collection", component: CollectionCreate, name: "create_collection"},
+    {path: "/create/species", component: SpeciesCreate, name: "create_species"},
+    {path: "/tag/:tag", component: TagView, name:"view_tag"}
 ];
 
 const router = new VueRouter({

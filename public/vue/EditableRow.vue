@@ -1,5 +1,5 @@
 <template>
-    <tr @dblclick="editing=!editing">
+    <tr @dblclick="swapEditMode()">
         <data-cell v-for="key in columns" v-bind:contents="row_data[key]" v-bind:column="key" v-bind:list="tableFor(key)" v-bind:key="key" v-bind:editing="editing"></data-cell>
     </tr>
 </template>
@@ -29,6 +29,9 @@ export default {
             } else {
                 return this.table;
             }
+        },
+        swapEditMode() {
+            //this.editing = !this.editing;
         }
     }
 }

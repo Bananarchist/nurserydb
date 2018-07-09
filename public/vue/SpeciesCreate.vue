@@ -1,6 +1,6 @@
 <template>
     <div id="speciesinfo">
-        <form v-if="this.loaded_s">
+        <form>
             <div class="form-group">
                 <label for="taxa">Taxanomical Name</label>
                 <input type="text" class="form-control" id="taxa" placeholder="Homo sapiens" v-model="formData.taxa" />
@@ -52,7 +52,6 @@
 
 <script>
 export default {
-    props: ["species"],
     data() {
         return {
             formData: {
@@ -65,43 +64,20 @@ export default {
                 description: "",
                 tags: "",
             },
-            _tags: [],
-            editing: !!this.$route.params.id,
-            id: this.$route.params.id,
-            loaded_c: false,
-            loaded_s: false,
             saving: false,
         }
     },
     computed: {},
     created() {
-        //check props before fetching
-        this.fetchSpecies();
     },
     methods: {
-        fetchSpecies() {
-            this.loaded_s = false;
-            fetch(`/species/${this.id}`, {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
-            .then(data=> {
-                //this.species = data;
-                Object.keys(this.formData).forEach(k=>{if(!!data[0][k]) { this.formData[k] = data[0][k]}});
-                this.loaded_s = true;
-            });
-        },
         valid() {
             return true; //lol
         },
         saveChanges() {
             if(this.valid()) {
-                let method = "POST";
-                let url = `/species/${this.id}`
+                let method = "PUT";
+                let url = `/species/`
                 this.saving = true;
                 fetch(url, {
                     method,
@@ -115,8 +91,7 @@ export default {
                 .then(data=> {
                     console.log(data);
                     $("#savingProgressModal").modal("hide");
-                    this.saving = false;
-                    this.$router.push({name:"view_species_by_id", params:{id:this.id}});
+                    this.$router.push({name:"view_species_by_id", params:{id:data.insertId}});
                 });
                 $("#savingProgressModal").modal("show");
             }

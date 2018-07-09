@@ -1,11 +1,15 @@
 <template>
     <div id="collectioninfo">
-        <form v-if="this.loaded_s && this.loaded_c">
+        <form>
             <div class="form-group">
                 <label for="species">Species</label>
                 <select class="form-control" id="species" v-model="formData.species_id">
                     <option v-for="(s, index) in species" :label="s.taxa + ' - ' + s.common" :value="s.id">{{ s.taxa }} - {{s.common}}</option>
                 </select>
+                <!--<input list="species_options" type="text" class="form-control" v-model="formData.species_id" id="species">
+                <datalist id="species_options">
+                    <option v-for="(s, index) in species" :label="s.taxa + ' - ' + s.common" :value="s.id" />
+                </datalist>-->
             </div>
             <div class="form-group">
                 <label for="size">Potting Size</label>
@@ -58,7 +62,6 @@
 <script>
 import store from "../c_store.js";
 export default {
-    props: ["collection"],
     data() {
         return {
             formData: {
@@ -72,28 +75,15 @@ export default {
                 source: "",
                 location: ""
             },
-            _tags: [],
-            id: this.$route.params.id,
-            loaded_c: false,
             loaded_s: false,
             saving: false,
             species: []
         }
     },
     created() {
-        this.fetchCollection(this.$route.params.id);
         this.fetchSpecies();
     },
     methods: {
-        fetchCollection() {
-            this.loaded_c = false;
-            store.getCollectionBy({id:this.id})
-            .then(data=> {
-                Object.keys(this.formData).forEach(k=>{if(!!data[0][k]) { this.formData[k] = data[0][k]}});
-                this.loaded_c = true;
-                return data[0];
-            });
-        },
         fetchSpecies() {
             this.loaded_s = false;
             fetch("/species/short", {
@@ -114,8 +104,8 @@ export default {
         },
         saveChanges() {
             if(this.valid()) {
-                let method = "POST";
-                let url = `/collection/${this.id}`;
+                let method = "PUT";
+                let url = `/collection/`;
                 this.saving = true;
                 $("#savingProgressModal").modal("show");
                 fetch(url, {
@@ -129,11 +119,9 @@ export default {
                 .then(data=>data.json())
                 .then(data=> {
                     console.log(data);
-                    //get id
-                    //redirect to collection view/id
                     $("#savingProgressModal").modal("hide");
                     this.saving = false;
-                    this.$router.push({name:"view_collection_by_id", params:{id:this.id}});
+                    this.$router.push({name:"view_collection_by_id", params:{id:data.insertId}});
                 });
             }
         },
