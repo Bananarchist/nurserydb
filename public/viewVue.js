@@ -10,9 +10,12 @@ import CollectionCreate from "./vue/CollectionCreate.vue";
 import SpeciesCreate from "./vue/SpeciesCreate.vue";
 import TagView from "./vue/TagView.vue";
 import CollectionSplit from "./vue/CollectionSplit.vue";
+import LoginView from "./vue/Login.vue";
+import DashboardView from "./vue/Dashboard.vue";
 import store from "./c_store.js";
 
 const routes = [
+    {path: "/", component: DashboardView, name:"dashboard"},
     {path: "/collection/all", component: AllCollections, name: "view_all_collections"},
     {path: "/species/all", component: AllSpecies, name: "view_all_species"},
     {path: "/species/:id", component: SpeciesView, name: "view_species_by_id"},
@@ -24,12 +27,23 @@ const routes = [
     {path: "/species/:id/edit", component: SpeciesEdit, name: "edit_species"},
     {path: "/create/collection", component: CollectionCreate, name: "create_collection"},
     {path: "/create/species", component: SpeciesCreate, name: "create_species"},
-    {path: "/tag/:tag", component: TagView, name:"view_tag"}
+    {path: "/tag/:tag", component: TagView, name:"view_tag"},
+    {path: "/login", component: LoginView, name:"login"},
 ];
 
 const router = new VueRouter({
     routes
 });
+
+router.beforeEach((to, from, next) => {
+    if(to.name !== "login") {
+        if(!document.cookie.match(/token/, "$1")) {
+            next({name:"login", params:{redirect:{name:to.name, params:to.params}}});
+        }
+    }
+
+    next();
+})
 
 var app = new Vue({
     el: "#nursery",
@@ -53,32 +67,6 @@ var app = new Vue({
             }
         ],
         shared: store.data,
-        inputPass: "",
-    },
-    methods: {
-        authenticate() {
-            //check with server if pass correct
-            fetch("/authenticate", {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"POST",
-                body: JSON.stringify({password:""})
-            })
-            .then(data=> {
-                sessionStorage.setItem("pass", "");
-            })
-            .catch(data=> {
-                console.log(data);
-            });
-
-        }
-    },
-    computed: {
-        authenticated() {
-            return !!sessionStorage.getItem("pass");
-        }
     },
     router
 });

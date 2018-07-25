@@ -1,15 +1,28 @@
 <template>
     <div id="speciesinfo">
-        <h2>{{ taxa }} <div class="btn-group mx-2"><router-link class="btn px-1 py-1" :to="{name: 'edit_species', params:{id}}" v-if="authenticated">✏️</router-link><a class="btn px-1 py-1" data-toggle="modal" data-target="#deleteConfirmationModal">🗑</a></div></h2>
+        <h2>{{ taxa }} <div class="btn-group mx-2"><router-link class="btn px-1 py-1" :to="{name: 'edit_species', params:{id}}">✏️</router-link><a class="btn px-1 py-1" data-toggle="modal" data-target="#deleteConfirmationModal">🗑</a></div></h2>
         <h3>{{ common }}</h3>
-        <h5><router-link v-bind:to="'/species/category/'+category">{{ category }}</router-link></h5>
-        <p> {{ description }}
-        Size: {{ size }}<br />
-        Wildlife
-        <p>{{ wildlife }}</p>
-        <div id="tags"><router-link class="btn btn-outline-info btn-sm" v-for="tag in tags" :to="{name: 'view_tag', params:{tag}}" :key="tag">{{tag}}</router-link></div>
+        <h5><router-link :to="{name: 'view_category', params:{id:category}}">{{ category }}</router-link></h5>
+        <div class="card">
+            <div class="card-header">
+                {{ taxa }} Information
+            </div>
+            <div class="card-body" v-if="!!description">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">{{ description }}</p>
+            </div>
+            <div class="card-body" v-if="!!size">
+                <h5 class="card-title">Size</h5>
+                <p class="card-text">{{ size }}</p>
+            </div>
+            <div class="card-body" v-if="!!wildlife">
+                <h5 class="card-title">Wildlife</h5>
+                <p class="card-text">{{ wildlife }}</p>
+            </div>
+            <div id="tags" class="text-right"><router-link class="btn btn-outline-info btn-sm tag" v-for="tag in tags" :to="{name: 'view_tag', params:{tag}}" :key="tag">{{tag}}</router-link></div>
+        </div>
 
-        <h3>Collections in inventory</h3>
+        <h3>Collections in inventory <router-link class="btn px-1 py-1" :to="{name: 'create_collection'}">✏️</router-link></h3>
         <div class="main_view">
             <table-view v-bind:collection="all_collections" v-bind:table="'collection'" v-bind:headers="['id','size','location','quantity','for_sale','price','source','added_to_inventory','credit']"></table-view>
         </div>
@@ -35,6 +48,7 @@
 
 <script>
 import tableView from "./TableView.vue";
+import store from "../c_store";
 export default {
     components: {
         tableView
@@ -51,7 +65,6 @@ export default {
             size: "",
             wildlife: "",
             description: "",
-            description: "",
             all_collections: [],
         }
     },
@@ -61,23 +74,9 @@ export default {
     methods: {
         fetchData() {
             this.loading = true;
-            return fetch(`/species/${this.id}`, {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
+            return store.species.byID(this.id).read()
             .then(data=> {
-                return fetch(`species/${this.id}/collections`, {
-                    headers: {
-                        "content-type": "application/json",
-                        "accept": "application/json"
-                    },
-                    method:"GET",
-                })
-                .then(data2 => data2.json())
+                return store.collection.bySpecies(this.id)
                 .then(data2 => {
                     data[0].all_collections = data2;
                     this.loading = false;
@@ -96,20 +95,8 @@ export default {
                 this.all_collections = data.all_collections;
             });
         },
-        authenticated() {
-            return true;
-        },
         handleDelete() {
-            //send delete
-            //onload, redirect to allspecies
-            fetch(`/species/${this.id}`, {
-                method: "DELETE",
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                }
-            })
-            .then(data=>data.json())
+            store.species.byID(this.id).delete()
             .then(data=> {
                 $("#deleteConfirmationModal").modal("hide");
                 //this.saving = false;
@@ -119,3 +106,12 @@ export default {
     }
 };
 </script>
+<style>
+    .card {
+        max-width: 50%;
+    }
+    .tag {
+        padding: 0 8px;
+        border-radius: 1rem;
+    }
+</style>

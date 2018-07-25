@@ -7,6 +7,7 @@
 
 <script>
 import tableView from "./TableView.vue";
+import store from "../c_store";
 import moment from "moment";
 export default {
     components: {
@@ -24,14 +25,7 @@ export default {
     methods: {
         fetchData() {
             this.loaded = false;
-            fetch("/collection/", {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json",
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
+            store.collection.all()
             .then(data=> {
                 this.collections = data.map(c => {
                     c.added_to_inventory = moment(c.added_to_inventory);

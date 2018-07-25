@@ -14,6 +14,7 @@ var config = {
             {test: /\.css$/, use: ["vue-style-loader", "css-loader"], exclude: /node_modules/}
         ]
     },
+    devtool: "source-map",
     plugins: [
         new VueLoaderPlugin()
     ]
@@ -21,11 +22,11 @@ var config = {
 
 module.exports = (env, argv) => {
     if(argv.mode === "development") {
-        config.devtool = "source-map";
+        //config.devtool = "source-map";
     }
 
     if(argv.mode === "production") {
-
+        delete config.devtool;
     }
 
     return config;

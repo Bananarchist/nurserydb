@@ -8,6 +8,7 @@
 
 <script>
 import tableView from "./TableView.vue";
+import store from "../c_store";
 export default {
     components: {
         collectionList: tableView

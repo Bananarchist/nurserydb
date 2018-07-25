@@ -6,6 +6,10 @@
                 <input type="text" class="form-control" id="taxa" placeholder="Homo sapiens" v-model="formData.taxa" />
             </div>
             <div class="form-group">
+                <label for="common">Common Name</label>
+                <input type="text" class="form-control" id="common" placeholder="Human" v-model="formData.common" />
+            </div>
+            <div class="form-group">
                 <label for="size">Species Full Size</label>
                 <input type="text" class="form-control" id="size" placeholder="1-gal" v-model="formData.size" />
             </div>
@@ -51,6 +55,7 @@
 </template>
 
 <script>
+import store from "../c_store";
 export default {
     data() {
         return {
@@ -79,16 +84,8 @@ export default {
                 let method = "PUT";
                 let url = `/species/`
                 this.saving = true;
-                fetch(url, {
-                    method,
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(this.formData)
-                })
-                .then(data=>data.json())
-                .then(data=> {
+                store.species.create(this.formData).then(
+                data=> {
                     console.log(data);
                     $("#savingProgressModal").modal("hide");
                     this.$router.push({name:"view_species_by_id", params:{id:data.insertId}});

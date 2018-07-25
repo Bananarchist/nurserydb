@@ -6,6 +6,10 @@
                 <input type="text" class="form-control" id="taxa" placeholder="Homo sapiens" v-model="formData.taxa" />
             </div>
             <div class="form-group">
+                <label for="common">Common Name</label>
+                <input type="text" class="form-control" id="common" placeholder="Human" v-model="formData.common" />
+            </div>
+            <div class="form-group">
                 <label for="size">Species Full Size</label>
                 <input type="text" class="form-control" id="size" placeholder="1-gal" v-model="formData.size" />
             </div>
@@ -51,6 +55,7 @@
 </template>
 
 <script>
+import store from "../c_store";
 export default {
     props: ["species"],
     data() {
@@ -81,15 +86,8 @@ export default {
     methods: {
         fetchSpecies() {
             this.loaded_s = false;
-            fetch(`/species/${this.id}`, {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
-            .then(data=> {
+            store.species.byID(this.id).read().then(
+            data=> {
                 //this.species = data;
                 Object.keys(this.formData).forEach(k=>{if(!!data[0][k]) { this.formData[k] = data[0][k]}});
                 this.loaded_s = true;
@@ -103,16 +101,8 @@ export default {
                 let method = "POST";
                 let url = `/species/${this.id}`
                 this.saving = true;
-                fetch(url, {
-                    method,
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(this.formData)
-                })
-                .then(data=>data.json())
-                .then(data=> {
+                store.species.byID(this.id).update(this.formData).then(
+                data=> {
                     console.log(data);
                     $("#savingProgressModal").modal("hide");
                     this.saving = false;

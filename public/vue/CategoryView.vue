@@ -8,6 +8,7 @@
 
 <script>
 import tableView from "./TableView.vue";
+import store from "../c_store";
 export default {
     components: {
         collectionList: tableView
@@ -26,14 +27,7 @@ export default {
     methods: {
         fetchData() {
             this.loaded = false;
-            fetch(`/category/${this.cat}`, {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
+            store.category.byID(this.cat).read()
             .then(data=> {
                 this.list = data;
                 this.loaded = true;

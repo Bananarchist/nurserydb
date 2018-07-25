@@ -19,6 +19,7 @@ app.use("/collection", routing.collection_routing);
 app.use("/species", routing.species_routing);
 app.use("/category", routing.category_routing);
 app.use("/tag", routing.tag_routing);
+app.use("/login", routing.admin_routing);
 
 app.listen(port, () => {
     console.log(`Server running @ http://localhost:${port}`);

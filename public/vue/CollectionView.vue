@@ -2,12 +2,12 @@
     <div id="collectioninfo">
         <h2><router-link :to="{name: 'view_species_by_id', params: {id:species_id}}">{{common}} (<i>{{ taxa }}</i>)</router-link>
             <div class="btn-group mx-2">
-                <router-link class="btn px-1 py-1" :to="{name: 'edit_collection', params:{id}}" v-if="authenticated">✏️</router-link>
+                <router-link class="btn px-1 py-1" :to="{name: 'edit_collection', params:{id}}">✏️</router-link>
                 <router-link class="btn px-1 py-1" :to="{name:'split_collection', params:{id}}">✂️</router-link>
                 <a class="btn px-1 py-1" data-toggle="modal" data-target="#deleteConfirmationModal">🗑</a>
             </div>
         </h2>
-        <h5><router-link :to="{name: 'view_category', params: {category}}">{{ category }}</router-link></h5>
+        <h5><router-link :to="{name: 'view_category', params: {id:category}}">{{ category }}</router-link></h5>
         <table class="table">
             <thead>
                 <tr><th scope="col">Size</th><th scope="col">Price</th><th scope="col">For Sale</th><th scope="col">Total</th></tr>
@@ -33,6 +33,7 @@
     </div>
 </template>
 <script>
+import store from "../c_store";
 export default {
     data() {
         return {
@@ -57,14 +58,7 @@ export default {
     },
     methods: {
         fetchData() {
-            fetch(`/collection/${this.id}`, {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
+            store.collection.byID(this.id).read()
             .then(data=> {
                 this.taxa = data[0].taxa;
                 this.common = data[0].common;
@@ -82,25 +76,12 @@ export default {
                 return data[0];
             });
         },
-        authenticated() {
-            return true;
-        },
         handleDelete() {
-            fetch(`/collection/${this.id}`, {
-                method: "DELETE",
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                }
-            })
-            .then(data=>data.json())
+            store.collection.byID(this.id).delete()
             .then(data=> {
                 $("#deleteConfirmationModal").modal("hide");
-                //this.saving = false;
                 this.$router.push({name:"view_all_collections", params:{id:this.id}});
             });
-            //send delete
-            //onload, redirect to allcollections
         }
     }
 }

@@ -87,7 +87,7 @@ export default {
     methods: {
         fetchCollection() {
             this.loaded_c = false;
-            store.getCollectionBy({id:this.id})
+            store.collection.byID(this.id).read()
             .then(data=> {
                 Object.keys(this.formData).forEach(k=>{if(!!data[0][k]) { this.formData[k] = data[0][k]}});
                 this.loaded_c = true;
@@ -96,15 +96,8 @@ export default {
         },
         fetchSpecies() {
             this.loaded_s = false;
-            fetch("/species/short", {
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json",
-                },
-                method:"GET",
-            })
-            .then(data=>data.json())
-            .then(data=> {
+            store.species.shortList().then(
+            data=> {
                 this.species = data;
                 this.loaded_s = true;
             });
@@ -114,23 +107,11 @@ export default {
         },
         saveChanges() {
             if(this.valid()) {
-                let method = "POST";
-                let url = `/collection/${this.id}`;
                 this.saving = true;
                 $("#savingProgressModal").modal("show");
-                fetch(url, {
-                    method,
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(this.formData)
-                })
-                .then(data=>data.json())
-                .then(data=> {
+                store.collection.byID(this.id).update(this.formData).then(
+                data=> {
                     console.log(data);
-                    //get id
-                    //redirect to collection view/id
                     $("#savingProgressModal").modal("hide");
                     this.saving = false;
                     this.$router.push({name:"view_collection_by_id", params:{id:this.id}});
