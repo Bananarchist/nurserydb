@@ -36,14 +36,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if(to.name !== "login") {
-        if(!document.cookie.match(/token/, "$1")) {
+    console.log(to);
+    if(!document.cookie.match(/token/)) {
+        if(to.name !== "login") {
             next({name:"login", params:{redirect:{name:to.name, params:to.params}}});
+        } else {
+            next();
         }
+    } else {
+        next();
     }
-
-    next();
-})
+});
 
 var app = new Vue({
     el: "#nursery",
@@ -65,8 +68,7 @@ var app = new Vue({
                 title: "Add Collection",
                 name: "create_collection"
             }
-        ],
-        shared: store.data,
+        ]
     },
     router
 });

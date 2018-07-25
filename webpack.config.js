@@ -21,11 +21,11 @@ var config = {
 };
 
 module.exports = (env, argv) => {
-    if(argv.mode === "development") {
+    //if(env.mode === "development") {
         //config.devtool = "source-map";
-    }
+    //}
 
-    if(argv.mode === "production") {
+    if(process.env.production) {
         delete config.devtool;
     }
 

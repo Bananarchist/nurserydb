@@ -47,23 +47,6 @@ export default {
                 let url = `/category/${this.editing ? this.category : ""}`;
                 this.saving = true;
                 $("#savingProgressModal").modal("show");
-                /*fetch(url, {
-                    method,
-                    headers: {
-                        "accept": "application/json",
-                        "content-type": "application/json"
-                    },
-                    body: JSON.stringify(this.formData)
-                })
-                .then(data=>data.json())
-                .then(data=> {
-                    console.log(data);
-                    //get id
-                    //redirect to collection view/id
-                    this.saving = false;
-                });*/
-                //pause 1 sec, set this.saving=false
-                //will update * where category = category set category=new_category
                 window.setTimeout(() => {
                     $("#savingProgressModal").modal("hide");
                     this.saving = false;

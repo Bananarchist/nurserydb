@@ -26,10 +26,9 @@
                     </ul>
                 </div>
             </nav>
-            <router-view class="main_view container-fluid px-0"></router-view>
-            <!--<footer class="fixed-bottom">
-                Stuff...
-            </footer>-->
+            <transition name="fade">
+                <router-view class="main_view container-fluid px-0"></router-view>
+            </transition>
         </div>
     </div>
     <script src="./index.js"></script>

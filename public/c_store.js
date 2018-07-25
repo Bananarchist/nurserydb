@@ -146,15 +146,16 @@ export default {
         byID(id) {
             return {
                 update(data) {
-
+                    //not implemented
+                    //should update all species with tag x to have tag y instead
                 },
                 read() {
-                    
+                    return getRecordBy("tag", {id});
                 }
             }
         },
         all() {
-
+            //not implemented
         },
     }
 }
